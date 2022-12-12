@@ -10,7 +10,7 @@ Resources:
       - LambdaFunction
     Properties:
       AccessControl: PublicRead
-      BucketName: storeemail6998
+      BucketName: storeemail6998zh
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
@@ -29,14 +29,16 @@ Resources:
       Bucket: !Ref storeemail6998
   LambdaPermission:
     Type: AWS::Lambda::Permission
+    DependsOn: 
+      - LambdaFunction
     Properties:
-      Action: "lambda:InvokeFunction"
+      Action: lambda:InvokeFunction
       FunctionName: !Ref LambdaFunction
       Principal: s3.amazonaws.com
   spamemailrole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: spam_email-role-xeaxad5t
+      RoleName: spamemailrole
       AssumeRolePolicyDocument:
         Statement:
           - Action:
@@ -47,7 +49,7 @@ Resources:
                 - lambda.amazonaws.com
         Version: 2012-10-17
       ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AWSLambdaBasicExecutionRole-4a6bacc8-4780-4095-b305-590805e4c890
+        - arn:aws:iam::aws:policy/AWSLambdaExecute
         - arn:aws:iam::aws:policy/AmazonS3FullAccess
         - arn:aws:iam::aws:policy/AmazonSESFullAccess
         - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
